@@ -598,7 +598,7 @@ function ContactForm() {
     setSubmitting(true);
     setError("");
     try {
-      const res = await fetch("https://formspree.io/f/bureaucraftisrael@gmail.com", {
+      const res = await fetch("https://formspree.io/f/mvzlpaqy", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
