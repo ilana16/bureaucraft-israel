@@ -953,15 +953,15 @@ function Footer() {
               Available via WhatsApp &amp; email
             </p>
             <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              href="https://wa.me/message/FNNLXFEHN2UMB1"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm transition-colors duration-200"
               style={{ color: "#B8902A", fontFamily: "Inter, sans-serif" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#d4a93c")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#B8902A")}
             >
-              Send a message →
+              Message on WhatsApp →
             </a>
           </div>
         </div>
@@ -999,11 +999,9 @@ function FloatingCTA() {
 
   return (
     <a
-      href="#contact"
-      onClick={(e) => {
-        e.preventDefault();
-        document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-      }}
+      href="https://wa.me/message/FNNLXFEHN2UMB1"
+      target="_blank"
+      rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-full shadow-lg transition-all duration-300"
       style={{
         background: "#B8902A",
