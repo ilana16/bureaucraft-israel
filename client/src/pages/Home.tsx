@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 // ─── Brand Assets ────────────────────────────────────────────────────────────
-const LOGO_FULL = "/manus-storage/logo-full-color_1718aec8.png";
+const LOGO_FULL = "/manus-storage/logo-full-color-v2_253d5c61.png";
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/120360528/b9qBxgsTKFAfFSStfzDLpA/hero-bg-hUQa5gRNoXMWzspz8Zu3Be.webp";
 const HOW_BG = "https://d2xsxph8kpxj0f.cloudfront.net/120360528/b9qBxgsTKFAfFSStfzDLpA/how-it-works-bg-SoY4DLyCkCW7h48eTCHmZw.webp";
 
