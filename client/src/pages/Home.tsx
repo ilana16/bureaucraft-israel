@@ -582,6 +582,8 @@ function HowItWorks() {
 // ─── Contact Form ─────────────────────────────────────────────────────────────
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "", email: "", phone: "", city: "",
     request: "", urgency: "normal", service: "", availability: "",
@@ -591,9 +593,36 @@ function ContactForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError("");
+    try {
+      const res = await fetch("https://formspree.io/f/BureauCraftIsrael@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          city: form.city,
+          service: form.service,
+          request: form.request,
+          urgency: form.urgency,
+          availability: form.availability,
+        }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const data = await res.json();
+        setError(data?.errors?.[0]?.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputStyle = {
@@ -778,25 +807,40 @@ function ContactForm() {
               </div>
 
               <p
-                className="text-xs mt-5 mb-6 leading-relaxed gold-border-left pl-3"
+                className="text-xs mt-5 mb-4 leading-relaxed gold-border-left pl-3"
                 style={{ color: "#9ca3af", fontFamily: "Inter, sans-serif" }}
               >
                 This is practical support, not legal, medical, or financial advice.
               </p>
 
+              {error && (
+                <p className="text-xs mb-4 px-3 py-2 rounded" style={{ color: "#b91c1c", background: "#fef2f2", fontFamily: "Inter, sans-serif" }}>
+                  {error}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full py-3.5 text-sm font-medium rounded transition-all duration-200"
+                disabled={submitting}
+                className="w-full py-3.5 text-sm font-medium rounded transition-all duration-200 flex items-center justify-center gap-2"
                 style={{
-                  background: "#1B2A6B",
+                  background: submitting ? "#6b7280" : "#1B2A6B",
                   color: "#F8F6F2",
                   fontFamily: "Inter, sans-serif",
                   letterSpacing: "0.03em",
+                  cursor: submitting ? "not-allowed" : "pointer",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#B8902A")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "#1B2A6B")}
+                onMouseEnter={(e) => { if (!submitting) e.currentTarget.style.background = "#B8902A"; }}
+                onMouseLeave={(e) => { if (!submitting) e.currentTarget.style.background = "#1B2A6B"; }}
               >
-                Send Message
+                {submitting ? (
+                  <>
+                    <svg className="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                    </svg>
+                    Sending...
+                  </>
+                ) : "Send Message"}
               </button>
             </form>
           )}
